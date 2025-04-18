@@ -1,0 +1,4 @@
+name = "InsightsAPI"
+uuid = "7bb0ffa8-2457-4431-bb1f-94951cdb261e"
+authors = ["Anikaith Bhardwaj <anikaith198@gmail.com>"]
+version = "0.1.0"

@@ -1,0 +1,4 @@
+name = "StochasticProcesses"
+uuid = "d85fffef-6697-4b0c-9e4f-559c17c6524d"
+authors = ["Anikaith Bhardwaj <anikaith198@gmail.com>"]
+version = "0.1.0"
