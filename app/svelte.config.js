@@ -5,7 +5,8 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: () => {
+		adapter: (() => {
+			console.log("process.env.VERCEL:", process.env.VERCEL)
 			if (process.env.VERCEL) {
 				return adapterVercel();
 			} else {
@@ -17,7 +18,7 @@ const config = {
           			strict: true
 				});
 			}
-		} 
+		}) () 
 	}
 };
 
