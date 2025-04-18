@@ -2,3 +2,9 @@ name = "EntryPoint"
 uuid = "d94865f9-be1c-4802-9917-7a90af081095"
 authors = ["Anikaith Bhardwaj <anikaith198@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+Mux = "a975b10e-0019-58db-a62f-e48ff68538c9"
+
+[compat]
+Mux = "1.0.2"

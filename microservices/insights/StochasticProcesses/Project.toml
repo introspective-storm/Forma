@@ -2,3 +2,13 @@ name = "StochasticProcesses"
 uuid = "d85fffef-6697-4b0c-9e4f-559c17c6524d"
 authors = ["Anikaith Bhardwaj <anikaith198@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+ExtremeStats = "bda1af87-e1f1-54ef-ae32-d9c31cb662a2"
+MCMCChains = "c7f686f2-ff18-58e9-bc7b-31028e88f75d"
+
+[compat]
+Distributions = "0.25.119"
+ExtremeStats = "1.0.0"
+MCMCChains = "6.0.7"
