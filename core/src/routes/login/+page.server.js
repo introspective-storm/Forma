@@ -38,7 +38,7 @@ export const actions = {
         if (checkIfUserExists.length == 0 ) {
           const { error: appContextError } = await supabase
           .from('app_context')
-          .insert({ user_id: userId, teams: [] , projects: []});
+          .insert({ user_id: userId, teams: [] , teams_created_on: [], projects: [], projects_created_on: [] });
 
           if(appContextError) {
             console.error("Error creating row for new user", appContextError)
