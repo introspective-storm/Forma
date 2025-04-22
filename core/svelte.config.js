@@ -1,25 +1,5 @@
-import adapterVercel from '@sveltejs/adapter-vercel';
-import adapterStatic from '@sveltejs/adapter-static'
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import adapter from '@sveltejs/adapter-static';
 
-const config = {
-	preprocess: vitePreprocess(),
-	kit: {
-		adapter: (() => {
-			console.log("process.env.VERCEL:", process.env.VERCEL)
-			if (process.env.VERCEL) {
-				return adapterVercel();
-			} else {
-				return adapterStatic({
-					pages: 'build',
-					assets: 'build',
-          			fallback: null,
-          			precompress: false,
-          			strict: true
-				});
-			}
-		}) () 
-	}
-};
+const config = { kit: { adapter: adapter() } };
 
 export default config;
