@@ -2,8 +2,9 @@
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
     import { redirect } from '@sveltejs/kit';
-
-    $: userTeams = $page.data?.userTeams || [];
+    export let data;
+    const { teams } = data
+    //$: userTeams = $page.data || [];
 
     let showCreateTeamForm = false;
     let newTeamName= "";
@@ -23,17 +24,15 @@
 <h1>Teams</h1>
 
 <div class="card.container">
-    {#if userTeams.length > 0}
-        {#each userTeams as team}
-            <a href={redirect('308', `/${team?.name}`)}> //take team name and use as url
+        {#each data.teams as team}
+            <!-- <a href={redirect('308', `/${team.url}`)}> //take team name and use as url -->
                 <div class="card">
-                    <h3>{team?.name}</h3>
-                    <p>{team?.description}</p>
-                    <p>Created: {team?.created}</p>
+                    <h3>{team.name}</h3>
+                    <p>{team.description}</p>
+                    <p>Created: {team.created}</p>
                 </div>
-            </a>
+            <!-- </a> -->
         {/each}
-    {/if}
     <div class="button-container">
         <button onclick={handleCreateTeam}>Create Team</button>
     </div>

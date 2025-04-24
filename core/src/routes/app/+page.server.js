@@ -6,25 +6,36 @@ import { JSDOM } from 'jsdom'
 const { window } = new JSDOM('')
 const purify = DOMPurify(window)
 
-export const load = async({ locals: { safeGetSession }, cookies}) => {
+export const load = async({ locals: { safeGetSession, supabase }, cookies}) => {
     const { session, user } = await safeGetSession()
     const userId = user?.id
+    //console.log(userId)
     if (userId) {
-        const { data: teamsData, error: teamsError } = await supabase.from('app_context').select().eq('user_id', userId)
-
+        const {data: teamsData, error: teamsError} = await supabase
+        .from('app_context')
+        .select('teams, teams_created_on, teams_description, teams_url')
+        .eq('user_id', userId)
+        console.log("team data:",teamsData)
         if (teamsError) {
             console.log(teamsError)
             return { teams: [] }
         } else {
             //teamsData ? console.log("team found:", teamsData) : console.log("team not found")
-            return { 
-                teams: teamsData?.teams || [], 
-                created: teamsData?.teams_created_on || [], 
-                description: teamsData?.teams_description || [] 
-            }
-        }
-
-    } else {
+            const teams = teamsData ? teamsData[0].teams : []
+            const created = teamsData ? teamsData[0].teams_created_on : []
+            const description = teamsData ? teamsData[0].teams_description : []
+            const url = teamsData ? teamsData[0].teams_url : []
+            console.log(teams)
+            const formattedTeams = teams.map((team, index) => ({
+                name: team,
+                created: created[index],
+                description: description[index],
+                url: url[index]
+            }))
+            console.log(formattedTeams)
+            return { teams: formattedTeams }
+            } 
+        } else {
         console.log("User not found")
         redirect(303, "/")
     }
