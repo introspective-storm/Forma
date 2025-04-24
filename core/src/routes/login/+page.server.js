@@ -41,10 +41,12 @@ export const actions = {
           .insert({
             user_id: userId, teams: [] , 
             teams_created_on: [],
-            teams_description: [], 
+            teams_description: [],
+            teams_url: [], 
             projects: [], 
             projects_created_on: [],
-            projects_description: []
+            projects_description: [],
+            projects_url: []
            });
 
           if(appContextError) {

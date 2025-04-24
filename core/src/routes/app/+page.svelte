@@ -2,7 +2,6 @@
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
     import { redirect } from '@sveltejs/kit';
-    import DOMPurify from 'dompurify'
 
     $: userTeams = $page.data?.userTeams || [];
 
@@ -47,7 +46,6 @@
             <div>
                 <label for="name">Project Name:</label>
                 <input type="text" id="name" name="name" bind:value={newTeamName} required>
-                {console.log(newTeamName)}
             </div>
             <div>
                 <label for="description">Description:</label>
