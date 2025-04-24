@@ -12,7 +12,11 @@ export const load = async({ locals: { safeGetSession }, cookies}) => {
             return { teams: [] }
         } else {
             teamsData ? console.log("team found") : console.log("team not found")
-            return { teams: teamsData?.teams || [], created: teamsData?.teams_created_on || [], description: teamsData?.teams_description || [] }
+            return { 
+                teams: teamsData?.teams || [], 
+                created: teamsData?.teams_created_on || [], 
+                description: teamsData?.teams_description || [] 
+            }
         }
 
     } else {
@@ -21,6 +25,5 @@ export const load = async({ locals: { safeGetSession }, cookies}) => {
     }
 }
 
-export const action = async({}) => {
-    
-}
+// export const action = async({}) => { 
+// }
