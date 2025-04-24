@@ -25,13 +25,13 @@
 
 <div class="card.container">
         {#each data.teams as team}
-            <!-- <a href={redirect('308', `/${team.url}`)}> //take team name and use as url -->
+            <a href={`./app/${team.url}`}> //take team name and use as url
                 <div class="card">
                     <h3>{team.name}</h3>
                     <p>{team.description}</p>
                     <p>Created: {team.created}</p>
                 </div>
-            <!-- </a> -->
+            </a>
         {/each}
     <div class="button-container">
         <button onclick={handleCreateTeam}>Create Team</button>
