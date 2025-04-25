@@ -11,10 +11,10 @@
   </script>
   
   <header>
-    <nav>
-      <a href="/">Home</a>
-    </nav>
-    <button onclick={logout}>Logout</button>
+      <nav>
+        <a href="/">Home</a>
+        <button onclick={logout}>Logout</button>
+      </nav>
   </header>
   <main>
     {@render children()}

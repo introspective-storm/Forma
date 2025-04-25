@@ -2,20 +2,25 @@
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
     import { redirect } from '@sveltejs/kit';
-    export let data;
+    // import { props } from 'svelte';
+    import Modal from './Modal.svelte'
+    
+    const { data } = $props()
     const { teams } = data
     //$: userTeams = $page.data || [];
 
+    let showModal = $state(false);
+
     let showCreateTeamForm = false;
-    let newTeamName= "";
-    let newTeamDescription= "";
+    let newTeamName= $state("");
+    let newTeamDescription= $state("");
 
     const handleCreateTeam = () => {
         showCreateTeamForm = true;
     }
 
     const closeCreateTeamForm = () => {
-        showCreateProjectForm = false;
+        showCreateTeamForm = false;
         newTeamName="";
         newTeamDescription="";
     }
@@ -23,22 +28,25 @@
 
 <h1>Teams</h1>
 
-<div class="card.container">
+<div class="card-container">
         {#each data.teams as team}
-            <a href={`./app/${team.url}`}> //take team name and use as url
-                <div class="card">
+        <div class="card">
+            <a href={`./app/${team.url}`}>
+                <div class="card-content">
                     <h3>{team.name}</h3>
-                    <p>{team.description}</p>
-                    <p>Created: {team.created}</p>
+                    <p class="description">{team.description}</p>
+                    <p class="created">Created: {team.created}</p>
                 </div>
             </a>
+        </div>
         {/each}
-    <div class="button-container">
-        <button onclick={handleCreateTeam}>Create Team</button>
-    </div>
 </div>
 
-{#if showCreateTeamForm}
+<div class="button-container">
+    <button onclick={()=>(showModal=true)}>Create Team</button>
+</div>
+
+<Modal bind:showModal>
     <div>
         <h2>Create Team</h2>
         <form method="POST" action="?/createTeam" use:enhance>
@@ -56,4 +64,4 @@
             </div>
         </form>
     </div>
-{/if}
+</Modal>

@@ -25,10 +25,21 @@ export const load = async({ locals: { safeGetSession, supabase }, cookies}) => {
             const created = teamsData ? teamsData[0].teams_created_on : []
             const description = teamsData ? teamsData[0].teams_description : []
             const url = teamsData ? teamsData[0].teams_url : []
-            console.log(teams)
+
+            const createdToDisplay = created.map((individualCreated)=>{
+                const dateObject = new Date(individualCreated)
+                
+                return dateObject.toLocaleString('en-US', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    year: 'numeric',
+                    timeZoneName: 'short'})
+            })
+            console.log(createdToDisplay)
+            console.log(created)
             const formattedTeams = teams.map((team, index) => ({
                 name: team,
-                created: created[index],
+                created: createdToDisplay[index],
                 description: description[index],
                 url: url[index]
             }))
