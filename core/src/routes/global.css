@@ -108,6 +108,7 @@ body {
 
   .card-container {
     display: flex;
+    justify-content: center;
     padding: 2%;
     flex-wrap: wrap;
     width: 85%;
@@ -165,4 +166,83 @@ body {
   .description-input {
     display: inline-flex;
     flex-direction: column;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-secondary);
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    padding: 2%;
+    border-radius: 15px;
+  }
+
+  @media screen  and (max-width: 1280px) {
+
+    .card-content > .created {
+      width: 80%;
+      margin-left: -5%;
+    }
+  }
+
+  @media screen  and (max-width: 1024px) {
+    nav {
+      margin-left: 70%;
+    }
+  }
+
+  @media screen  and (max-width: 768px) {
+    .card-content > h3 {
+      margin-left: -30%;
+    }
+
+    .card-content > .created {
+      margin-left: 0%;
+    }
+    nav {
+      margin-left: 60%;
+    }
+  }
+
+  @media screen  and (max-width: 640px) {
+    .card-container{
+      margin-left: 10%;
+    }
+    nav {
+      display: inline-flex;
+      justify-content: center;
+      margin-left: 50%;
+    }
+
+    .card-content > h3 {
+      margin-left: 0%;
+    }
+
+    .card-content {
+      margin: 0%;
+      display: inline-flex;
+      flex-direction: column;
+    }
+
+    .card-content > .created {
+      width: 100%;
+      margin-left: 10%;
+      margin-bottom: 2%;
+    }
+
+    .card {
+      width: 50%;
+      margin-left: 0%;
+      padding-left: 0%;
+    }
+
+    .button-container {
+      width: 40%;
+      margin-left: 32%;
+      margin-right: 35%;
+      padding: 2%;
+      border-radius: 15px;
+    }
   }
