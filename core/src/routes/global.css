@@ -15,17 +15,20 @@
 
 
 body {
+    width: 100%;
+    overflow-x: hidden;
     font-family: "Lexend", sans-serif ;
     font-optical-sizing: auto;
     font-weight:400;
     font-style:normal;
     color: var(--text);
     background-color: var(--background);
-
   }
 
   h1 {
-    margin-left: 18%;
+    width: 85%;
+    margin-left: 12%;
+    padding: 2%;
     font-size: 3em;
   }
 
@@ -69,12 +72,46 @@ body {
     font-size: 1.2em;
   }
 
+  form {
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  input {
+    border: solid;
+    border-width: 1px;
+    border-color: var(--text);
+    border-radius: 25px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: var(--background-secondary);
+    font-family: inherit;
+    color: var(--text);
+  }
+
+  textarea {
+    border: solid;
+    border-width: 1px;
+    border-color: var(--text);
+    border-radius: 25px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 5%;
+    padding-right: 5%;
+    resize: none;
+    background-color: var(--background-secondary);
+    font-family: inherit;
+    color: var(--text);
+  }
+
   .card-container {
     display: flex;
     padding: 2%;
     flex-wrap: wrap;
-    width: 90%;
-    margin-left: 5%;
+    width: 85%;
+    margin-left: 10%;
 
   }
 
@@ -118,4 +155,14 @@ body {
   .card-content > .description {
     font-size: 0.9em;
     color: var(--text-secondary);
+  }
+
+  .team-input {
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  .description-input {
+    display: inline-flex;
+    flex-direction: column;
   }

@@ -16,9 +16,7 @@
 >
 	<div>
 		{@render header?.()}
-		<hr />
 		{@render children?.()}
-		<hr />
 		<!-- svelte-ignore a11y_autofocus -->
 		<button autofocus onclick={() => dialog.close()}>close modal</button>
 	</div>
@@ -29,7 +27,9 @@
         background-color: #1f2229;
 		max-width: 32em;
 		border-radius: 25px;
-		border: none;
+		border: solid;
+        border-width: 1px;
+        border-color: #76ce93 ;
 		padding: 0;
         color: #eff2e5;
 	}
@@ -62,6 +62,7 @@
 		}
 	}
 	button {
+        margin-top: 5%;
 		display: block;
 	}
 </style>

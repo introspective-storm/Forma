@@ -50,13 +50,19 @@
     <div>
         <h2>Create Team</h2>
         <form method="POST" action="?/createTeam" use:enhance>
-            <div>
+            <div class="team-input">
                 <label for="name">Project Name:</label>
                 <input type="text" id="name" name="name" bind:value={newTeamName} required>
             </div>
-            <div>
+            <div class="description-input">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" bind:value={newTeamDescription}></textarea>
+                <textarea
+                 id="description" 
+                 name="description" 
+                 bind:value={newTeamDescription}
+                 cols="15"
+                 rows="10"
+                 ></textarea>
             </div>
             <div class="modal-buttons">
                 <button type="submit">Create</button>
