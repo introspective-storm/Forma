@@ -10,10 +10,16 @@
 		"prepare": "svelte-kit sync || echo ''"
 	},
 	"devDependencies": {
+		"@skeletonlabs/skeleton": "^3.1.3",
+		"@skeletonlabs/skeleton-svelte": "^1.2.1",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@tailwindcss/forms": "^0.5.9",
+		"@tailwindcss/typography": "^0.5.15",
+		"@tailwindcss/vite": "^4.0.0",
 		"svelte": "^5.0.0",
+		"tailwindcss": "^4.0.0",
 		"vite": "^6.2.5"
 	},
 	"dependencies": {

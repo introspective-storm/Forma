@@ -26,24 +26,27 @@
     }
 </script>
 
-<h1>Teams</h1>
+<h1 class="text-7xl font-semibold pl-15 pb-10 pt-5">Teams</h1>
 
-<div class="card-container">
+<div class="w-full grid grid-cols-3 gap-5 justify-center-safe pl-15 pr-15">
         {#each data.teams as team}
-        <div class="card">
+        <div class="card p-4 bg-surface-900 card-hover">
             <a href={`./app/${team.url}`}>
-                <div class="card-content">
-                    <h3>{team.name}</h3>
-                    <p class="description">{team.description}</p>
-                    <p class="created">Created: {team.created}</p>
+                <div>
+                    <h3 class="text-3xl font-semibold pt-1 pb-2">{team.name}</h3>
+                    <p class="text-base pb-8 text-surface-200">{team.description}</p>
+                    <hr class="hr border-solid border-primary-500">
+                    <p class="text-xs text-surface-500 pt-2">Created: {team.created}</p>
                 </div>
             </a>
         </div>
         {/each}
 </div>
 
-<div class="button-container">
-    <button onclick={()=>(showModal=true)}>Create Team</button>
+<div class="w-full grid grid-cols-1 gap-10 justify-center-safe pl-15 pr-15 mt-10 mb-5">
+    <div class="card p-6 bg-surface-900 flex flex-col items-center">
+        <button class="btn-md btn preset-filled-primary-500" onclick={()=>(showModal=true)}>Create Team</button>
+    </div>
 </div>
 
 <Modal bind:showModal>

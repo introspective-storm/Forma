@@ -1,21 +1,23 @@
 <script>
-    import { invalidate } from '$app/navigation'
-    import { onMount } from 'svelte'
-    import './global.css'
+  import '../app.css';
+  //import '@skeletonlabs/skeleton'
+  import '../forma-theme.css'
+  import { invalidate } from '$app/navigation';
+  import { onMount } from 'svelte';
   
-    let { data, children } = $props()
-    let { session, supabase } = $derived(data)
+  let { data, children } = $props();
+  let { session, supabase } = $derived(data);
   
-    onMount(() => {
-      const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
-        if (newSession?.expires_at !== session?.expires_at) {
-          invalidate('supabase:auth')
-        }
-      })
+  onMount(() => {
+    const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
+      if (newSession?.expires_at !== session?.expires_at) {
+        invalidate('supabase:auth');
+      }
+    });
   
-      return () => data.subscription.unsubscribe()
-    })
-  </script>
+    return () => data.subscription.unsubscribe();
+  });
+</script>
 
   <svelte:head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
