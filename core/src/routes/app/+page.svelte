@@ -26,7 +26,8 @@
     }
 </script>
 
-<h1 class="text-7xl font-semibold pl-15 pb-10 pt-5">Teams</h1>
+<h1 class="text-2xl font-semibold pl-15 pt-5 text-primary-400">Hi, {data.user}</h1>
+<h3 class="text-5xl font-semibold pl-15 pb-15 pt-3">Teams</h3>
 
 <div class="w-full grid grid-cols-3 gap-5 justify-center-safe pl-15 pr-15">
         {#each data.teams as team}

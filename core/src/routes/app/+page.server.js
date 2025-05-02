@@ -9,6 +9,8 @@ const purify = DOMPurify(window)
 export const load = async({ locals: { safeGetSession, supabase }, cookies}) => {
     const { session, user } = await safeGetSession()
     const userId = user?.id
+    const userEmail = user?.email
+    const userName = userEmail.slice(0, userEmail.lastIndexOf('@'))
     //console.log(userId)
     if (userId) {
         const {data: teamsData, error: teamsError} = await supabase
@@ -44,7 +46,7 @@ export const load = async({ locals: { safeGetSession, supabase }, cookies}) => {
                 url: url[index]
             }))
             console.log(formattedTeams)
-            return { teams: formattedTeams }
+            return { teams: formattedTeams, user: userName }
             } 
         } else {
         console.log("User not found")

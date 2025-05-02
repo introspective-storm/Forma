@@ -65,8 +65,9 @@ export const load = async({ locals: { safeGetSession, supabase }, cookies, param
                 description: filteredProjectsData[0].description[index],
                 url: filteredProjectsData[0].url[index]
             }))
+            const teamName = teamSlug[0].toUpperCase() + teamSlug.substring(1)
             console.log("formatedProjects:",formattedprojects)
-            return { projects: formattedprojects }
+            return { projects: formattedprojects, team: teamName }
             } 
         } else {
         console.log("User not found")
