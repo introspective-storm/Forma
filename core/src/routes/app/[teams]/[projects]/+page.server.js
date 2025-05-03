@@ -15,9 +15,9 @@ async function main() {
       contents: "What is your name?",
       config: {
         systemInstruction: AI_SYSTEM_INSTRUCTIONS,
-        tools: [{
-            functionDeclarations: []
-        }]
+        // tools: [{
+        //     functionDeclarations: []
+        // }]
       }
     });
     console.log(response.text);
@@ -35,6 +35,11 @@ export const load = async({ locals: {safeGetSession, supabase }, cookies, params
     return {name: teamName + ' / ' + projectName}
 }
 
-export const actions = async({ locals: {safeGetSession, supabase }, cookies, params }) => {
-
+export const actions = {
+    chat: async({ locals: {safeGetSession, supabase }, cookies, params }) => {
+        // const response = await ai.models.generateContent({
+        //     model: "gemini-2.0-flash",
+        //     contents: message
+        // })
+    }
 }
