@@ -10,10 +10,10 @@
 <h1 class="text-2xl font-semibold pl-15 pt-5 text-primary-400">{data.name}</h1>
 <h3 class="text-5xl font-semibold pl-15 pb-15 pt-3">Dashboard</h3>
 
-<div class="w-full h-screen grid grid-cols-3 grid-rows-6 gap-5 justify-center-safe pl-15 pr-15 mb-10">
+<div class="w-full h-screen grid grid-cols-5 grid-rows-6 gap-5 justify-center-safe pl-15 pr-15 mb-10">
     <div class="card bg-surface-900 col-span-1 row-span-4">
         <h4 class="flex flex-row gap-3 text-3xl font-semibold p-5 text-secondary-400"> Overview <SquareChartGantt/> </h4>
-        <div class="grid grid-cols-3 gap-3 justify-center-safe pl-5 pr-5">
+        <div class="grid grid-cols-2 gap-3 justify-center-safe pl-5 pr-5">
             <div class="card bg-surface-800">
                 <h5>test</h5>
             </div>
@@ -28,7 +28,7 @@
 
     </div>
 
-    <div class="card bg-surface-900 col-span-2 row-span-4">
+    <div class="card bg-surface-900 col-span-4 row-span-4">
         <h4 class="flex flex-row gap-3 text-3xl font-semibold p-5 text-secondary-400"> Lumi <Sparkles/> </h4>
         <!-- Chat Interface -->
         <div class="w-full h-130 grid grid-cols-[auto_1fr] gap-5">
@@ -75,7 +75,7 @@
                     <form class="input-group grid-cols-[auto_1fr_auto]" action="">
                         <button class="ig-cell preset-filled-primary-500"><Upload /></button>
                         <textarea class="ig-input resize-y max-h-70 min-h-12 h-12 w-140 border border-surface-500"></textarea>
-                        <button class="ig-btn preset-filled-primary-500"><Send/></button>
+                        <button class="ig-btn preset-filled-primary-500" type="submit"><Send/></button>
                     </form>
                 </div>
             </div>
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <div class="card bg-surface-900 col-span-3 row-span-2">
+    <div class="card bg-surface-900 col-span-5 row-span-2">
         <h4> test </h4>
     </div>
 
