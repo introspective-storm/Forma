@@ -1,4 +1,5 @@
 <script>
+    import { enhance } from '$app/forms';
     import { page } from '$app/stores'
     import { Sparkles, SquareChartGantt, Send, Upload } from '@lucide/svelte';
 
@@ -72,9 +73,9 @@
                 </div>
                 <!--The prompt-->
                 <div class="justify-self-center">
-                    <form class="input-group grid-cols-[auto_1fr_auto]" action="">
+                    <form class="input-group grid-cols-[auto_1fr_auto]" method="POST" action="?/chat" use:enhance>
                         <button class="ig-cell preset-filled-primary-500"><Upload /></button>
-                        <textarea class="ig-input resize-y max-h-70 min-h-12 h-12 w-140 border border-surface-500"></textarea>
+                        <textarea class="ig-input resize-y max-h-70 min-h-12 h-12 w-140 border border-surface-500" bind:value={userMessage} name="userChat"></textarea>
                         <button class="ig-btn preset-filled-primary-500" type="submit"><Send/></button>
                     </form>
                 </div>

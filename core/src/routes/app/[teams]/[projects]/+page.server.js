@@ -36,7 +36,9 @@ export const load = async({ locals: {safeGetSession, supabase }, cookies, params
 }
 
 export const actions = {
-    chat: async({ locals: {safeGetSession, supabase }, cookies, params }) => {
+    chat: async({request, locals: {safeGetSession, supabase }, cookies, params }) => {
+      const chatData = await request.formData()
+      console.log(chatData?.get('userChat'))
         // const response = await ai.models.generateContent({
         //     model: "gemini-2.0-flash",
         //     contents: message
