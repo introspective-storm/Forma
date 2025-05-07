@@ -1,13 +1,14 @@
 import { GoogleGenAI} from '@google/genai'
 import { AI_SYSTEM_INSTRUCTIONS, GOOGLE_AI_KEY } from '$env/static/private'
+import { callInsightsAPI } from './insightsAPI';
 
 // set new genAI
 const ai = new GoogleGenAI({apiKey: GOOGLE_AI_KEY})
 
 // function declarations
-const entryPointAPIFunctionDeclaration = {
-    name: "entry_point_api",
-    description: "The entry for the microservice API. It decides where to send the data off to for further processing given a JSON.",
+const insightsAPIFunctionDeclaration = {
+    name: "insights_api",
+    description: "The entry for the insights API. It decides where to send the data off to for further processing given a JSON.",
     parameters: {
       type: "object",
       properties: {
@@ -105,17 +106,15 @@ const entryPointAPIFunctionDeclaration = {
 const modelConfig = {
   systemInstruction: AI_SYSTEM_INSTRUCTIONS,
   tools: [{
-    functionDeclarations: [entryPointAPIFunctionDeclaration]
+    functionDeclarations: [insightsAPIFunctionDeclaration]
     }]
 }
 
 // pass user prompt to model, and return output/function call
 /*
-TODO: clean up the lumi function. For multi-chat turns, instead have this function return after every turn with the chat history.
-The first chat history will be empty (and in the future, only for new chats). Run the model once and get back a response, and save it in
-the return object. Then, pass it back down to the model, this time with the history. This should ensure a better flow and more control
-on the server.
+TODO: speed up the model with chunks, so the user is not waiting for a few seconds for their input to dissapear.
 */
+
 async function lumi(message, conversationHistory=[]) {
 
   const contents = [...conversationHistory, {role: "user", parts: [{text: message}]}]
@@ -130,24 +129,16 @@ async function lumi(message, conversationHistory=[]) {
 
   if(functionCall) {
     for (const fn of functionCall) {
-      if(fn.name === "entry_point_api") {
-        const entryPointAPICall = {
-          method: "POST",
-          request: fn.args.request,
-          data: fn.args.data
-        }
-        //temp checking to see if it runs
-        console.log(entryPointAPICall)
+      if(fn.name === "insights_api") {
+        console.log(fn.args)
+
+        callInsightsAPI(fn.args)
 
         return {
           latestModelResponse: {role:"model", parts: [{functionCall: fn}]},
           conversationHistory: [...contents, {role:"model", parts: [{functionCall: fn}]}],
-          functionResult: entryPointAPICall
+          functionResult: callInsightsAPI
         }
-        // push function call and response after it is received, and return
-        // contents.push({role:"model", parts: [{functionCall: fn}]})
-        // contents.push({role:"user", parts: [{functionResponse: {name: "entry_point_api", response: {result: "hi!"}}}]}) //using just the json as temp check
-
       } else if(fn.name === "create_chart") {
         const createChart = {
           chart_type: fn.args.chart_type,
@@ -161,43 +152,21 @@ async function lumi(message, conversationHistory=[]) {
           conversationHistory: [...contents, {role:"model", parts: [{functionCall: fn}]}],
           functionResult: createChart
         }
-        // push function call and response after it is received
-        // contents.push({role:"model", parts: [{functionCall: fn}]})
-        // contents.push({role:"user", parts: [{functionResponse: {name: "create_chart", response: {result: "hi!"}}}]}) //using just the json as temp check
       }
     }
-
   } else if(response.text) {
     return {
       latestModelResponse: {role:"model", parts: [{text: response.text}]},
       conversationHistory: [...contents, {role:"model", parts: [{text: response.text}]}],
       functionResult: null
     }
-    //append user and model response to contents array
-    // contents.push({role:"user", parts: [{text: message}]})
-    // contents.push({role:"model", parts: [{text: response.text}]})
   } else {
     return {
       latestModelResponse: {role:"model", parts: [{text: "Something went wrong, please try asking me again."}]},
       conversationHistory: [...contents, {role:"model", parts: [{text: "Something went wrong, please try asking me again."}]}],
       functionResult: createChart
     }
-    // console.log("Something went wrong with Lumi")
   }
-  // call the model again, and append the result of the
-  // const finalResponse = await ai.models.generateContent({
-  //   model: 'gemini-2.0-flash',
-  //   contents: contents,
-  //   config: modelConfig
-  // });
-  // contents.push({role:"model", parts: [{text: finalResponse.text}]})
-
-  // return {
-  //   latestModelResponse: contents[contents.length-1], // get last response
-  //   functionCall: response.functionCalls,
-  //   allResponses: contents,
-  //   modelReply: contents[contents.length-1].parts[0].text
-  // }
 }
 
 export {lumi}
