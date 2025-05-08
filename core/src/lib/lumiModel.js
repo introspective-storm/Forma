@@ -32,7 +32,7 @@ const insightsAPIFunctionDeclaration = {
               description: "If 'descriptive_statistics' was choosen as a request, then choose one or many of the following options here to calculate the needed statistics",
               items: {
                 type: "string",
-                enum:["mean", "median", "mode", "variance", "standard-deviation", "quartiles", "skewness", "kurtosis"],
+                enum:["mean", "median", "mode", "variance", "standard_deviation", "quartiles", "skewness", "kurtosis"],
               }
             },
             // non_parametric: {

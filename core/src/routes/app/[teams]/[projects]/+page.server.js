@@ -47,7 +47,7 @@ export const actions = {
       console.log(userChat)
 
       if(userChat) {
-        console.log("start of the session:",conversationHistory)
+        console.log("start of the session:", conversationHistory)
         const chatResponse = await lumi(userChat, conversationHistory)
         chatResponse ? console.log(chatResponse.latestModelResponse.parts) : console.log("chatResponse is not there")
         conversationHistory = chatResponse.conversationHistory
