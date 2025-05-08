@@ -12,8 +12,9 @@ async function callInsightsAPI(payload) {
         });
 
         if (!response.ok) {
-            const errorData = await response.json()
-            throw new Error(`Insights API error: ${response.status}-${JSON.stringify(errorData)}`)
+            const errorData = await response.text()
+            console.error("Insights API error: ", errorData)
+            //throw new Error(`Insights API error: ${response.status}-${JSON.stringify(errorData)}`)
         }
 
         const result = await response.json();
@@ -21,7 +22,7 @@ async function callInsightsAPI(payload) {
         return result
     } catch(error) {
         console.error('Error calling the Insights API', error)
-        throw error
+        //throw error
     }
 }
 

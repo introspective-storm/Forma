@@ -26,30 +26,22 @@ end
         if haskey(request, :descriptive_statistics) && length(data) == 1 # data is in form x: [[...], [...],...]
             println("descriptive_statistics")
             descriptive_statistics_categories = request[:descriptive_statistics]
-            descriptive_stats(descriptive_statistics_categories, data[1])
+            response_data["descriptive_stats"] = descriptive_stats(descriptive_statistics_categories, data[1])
 
         elseif haskey(request, :descriptive_statistics) && length(data) > 1 
+            descriptive_statistics_categories = request[:descriptive_statistics]
+            descriptive_stats_by_column = Dict()
             for (i, column) in enumerate(columns)
-                response_data[columns[column]] = descriptive_stats(descriptive_statistics_categories, data[i])
-                println("$response_data")
-        end
-
-        elseif haskey(request, :regression)
-            #stuff
-        elseif haskey(request, :stochastic)
-            #stuff
-        elseif haskey(request, :survival)
-            #stuff
-        elseif haskey(request, :timeseries)
-            #stuff
-        elseif haskey(request, :ml)
-            #stuff
-        else
-            println("category not found")
+                descriptive_stats_by_column[column] = descriptive_stats(descriptive_statistics_categories, data[i])
+                println("column: $(columns[i])")
+                println("data: $(data[i])")
+            end
+            response_data["descriptive_stats"] = descriptive_stats_by_column
+            println("$response_data")
         end
                 
         #response_data = Dict("received_data" => payload, "status" => "success")
-
+        println("$response_data")
         return response_data
 
     catch e
