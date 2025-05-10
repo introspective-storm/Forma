@@ -3,10 +3,26 @@
     import { page } from '$app/stores'
     import { Sparkles, SquareChartGantt, Send, Upload } from '@lucide/svelte';
 
-    const { data } = $props()
+    let { data, form } = $props()
     let userMessage = $state('')
-    let chatMessages = $state([])
-    const obj=[{messageIsUser: false, text: 'Hi'},{messageIsUser: true, text: 'Hi'}]
+    let chatMessages = $state(data.chatHistory || [])
+    console.log(chatMessages)
+
+    async function handleSubmit() {
+    const response = await enhance(form, {
+      onSuccess: ({ data }) => {
+        console.log('Form success data:', data);
+        if (data?.conversationHistory) {
+          chatMessages.set(data.conversationHistory);
+          console.log('Updated chatMessages:', $chatMessages);
+        }
+      },
+      onError: ({ response, data }) => {
+        console.error('Form submission error', response, data);
+      }
+    });
+  }
+    // const obj=[{messageIsUser: false, text: 'Hi'},{messageIsUser: true, text: 'Hi'}]
 </script>
 <h1 class="text-2xl font-semibold pl-15 pt-5 text-primary-400">{data.name}</h1>
 <h3 class="text-5xl font-semibold pl-15 pb-15 pt-3">Dashboard</h3>
@@ -48,7 +64,7 @@
             <!--Two Row Layout for righthand column, first the main chat, then the prompt-->
 
             <!--The main feed/chat-->
-            <div class="h-full grid grid-rows-[1fr_auto] gap-3 border-l border-primary-500 pr-5 pl-5">
+            <div class="h-full overflow-y-auto grid grid-rows-[1fr_auto] gap-3 border-l border-primary-500 pr-5 pl-5">
                 <div class="overflow-y-auto">
                     {#if chatMessages.length == 0}
                         <div class="justify-self-center">
@@ -58,14 +74,20 @@
                     {:else}
                         <div>
                             {#each chatMessages as message }
-                                {#if message.messageIsUser}
+                                {#if message.role === 'user' && message.responseShown}
                                     <div class="card border border-secondary-500 p-3 m-3 mr-15 max-w-95 justify-self-end">
-                                        <p>{message.text}</p>
+                                        <p>{message.parts[0].text}</p>
                                     </div>
                                 {:else}
+                                    {#if message.parts[0].text && message.responseShown}
+                                        <div class="card preset-gradient-one p-3 m-3 ml-5 max-w-115 justify-self-start">
+                                            <p class="text-surface-800">{message.parts[0].text}</p>
+                                        </div>
+                                    <!-- {:else if message.parts[0].functionResponse}
                                     <div class="card preset-gradient-one p-3 m-3 ml-5 max-w-115 justify-self-start">
-                                        <p class="text-surface-800">{message.text}</p>
-                                    </div>
+                                        <p class="text-surface-800">{message.parts[0].functionResponse.result}</p>
+                                    </div> -->
+                                    {/if}
                                 {/if}
                             {/each}
                         </div>

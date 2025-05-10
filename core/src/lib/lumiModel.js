@@ -115,9 +115,13 @@ const modelConfig = {
 TODO: speed up the model with chunks, so the user is not waiting for a few seconds for their input to dissapear.
 */
 
-async function lumi(message, conversationHistory=[]) {
-
-  const contents = [...conversationHistory, {role: "user", parts: [{text: message}]}]
+async function lumi(message, conversationHistory=[], fromUser) {
+  let contents = []
+  if(fromUser){
+    contents = [...conversationHistory, {role: "user", parts: [{text: message}], responseShown: true}]
+  } else {
+    contents = [...conversationHistory, {role: "user", parts: [{text: message}], responseShown: false}]
+  }
   // model response to user
   const response = await ai.models.generateContent({
     model: 'gemini-2.0-flash',
@@ -132,11 +136,12 @@ async function lumi(message, conversationHistory=[]) {
       if(fn.name === "insights_api") {
         console.log(fn.args)
 
-        callInsightsAPI(fn.args)
+        const insights = callInsightsAPI(fn.args)
+        const insightsResult = insights.result
 
         return {
           latestModelResponse: {role:"model", parts: [{functionCall: fn}]},
-          conversationHistory: [...contents, {role:"model", parts: [{functionCall: fn}]}],
+          conversationHistory: [...contents, {role:"model", parts: [{functionCall: fn}], responseShown: false}],
           functionResult: callInsightsAPI
         }
       } else if(fn.name === "create_chart") {
@@ -149,7 +154,7 @@ async function lumi(message, conversationHistory=[]) {
 
         return {
           latestModelResponse: {role:"model", parts: [{functionCall: fn}]},
-          conversationHistory: [...contents, {role:"model", parts: [{functionCall: fn}]}],
+          conversationHistory: [...contents, {role:"model", parts: [{functionCall: fn}], responseShown: false}],
           functionResult: createChart
         }
       }
@@ -157,13 +162,13 @@ async function lumi(message, conversationHistory=[]) {
   } else if(response.text) {
     return {
       latestModelResponse: {role:"model", parts: [{text: response.text}]},
-      conversationHistory: [...contents, {role:"model", parts: [{text: response.text}]}],
+      conversationHistory: [...contents, {role:"model", parts: [{text: response.text}], responseShown: true}],
       functionResult: null
     }
   } else {
     return {
-      latestModelResponse: {role:"model", parts: [{text: "Something went wrong, please try asking me again."}]},
-      conversationHistory: [...contents, {role:"model", parts: [{text: "Something went wrong, please try asking me again."}]}],
+      latestModelResponse: {role:"model", parts: [{text: "Something went wrong, please try asking me again."}], responseShown: true},
+      conversationHistory: [...contents, {role:"model", parts: [{text: "Something went wrong, please try asking me again."}], responseShown: true}],
       functionResult: createChart
     }
   }

@@ -36,7 +36,7 @@ export const load = async({ locals: {safeGetSession, supabase }, cookies, params
     const teamName = teamSlug[0].toUpperCase() + teamSlug.substring(1)
     const projectName = projectSlug[0].toUpperCase() + projectSlug.substring(1)
 
-    return {name: teamName + ' / ' + projectName}
+    return {name: teamName + ' / ' + projectName, chatHistory: conversationHistory}
 }
 
 export const actions = {
@@ -48,10 +48,16 @@ export const actions = {
 
       if(userChat) {
         console.log("start of the session:", conversationHistory)
-        const chatResponse = await lumi(userChat, conversationHistory)
+        const chatResponse = await lumi(userChat, conversationHistory, true)
         chatResponse ? console.log(chatResponse.latestModelResponse.parts) : console.log("chatResponse is not there")
-        conversationHistory = chatResponse.conversationHistory
-        console.log("end of the session:", conversationHistory, chatResponse.functionResult)
+        conversationHistory = [...chatResponse.conversationHistory]
+        console.log("end of the session:", conversationHistory, "functionResponse:", chatResponse.functionResult)
+        const functionResult = chatResponse.functionResult
+        if (functionResult) {
+          const chatResponseToFunction = await lumi(`Can you talk about these results? ${functionResult}`, conversationHistory, false)
+          conversationHistory = [...chatResponseToFunction.conversationHistory]
+        }
+        return {conversationHistory}
       } else {
         console.log("Error in receiving user chat");
       }
